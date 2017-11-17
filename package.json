@@ -1,0 +1,36 @@
+{
+  "name": "@boxandpointer/timer",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "npm run clean && mkdir dist tmp && npm run build:html && npm run build:assets && npm run build:js && find dist -empty -type d -delete",
+    "build:html": "pug --out dist src && find dist -name _*.html -delete",
+    "build:assets": "cp -r src/. dist && find dist -regextype posix-egrep -regex '.*\\.(pug|tsx)$' -delete",
+    "build:js": "tsc --outdir tmp && browserify tmp/index.js -o dist/index.js -t babelify",
+    "clean": "rm -rf dist tmp",
+    "deploy": "npm run build && cd dist && surge",
+    "serve": "serve dist",
+    "watch": "nodemon --watch src --ext pug,tsx --exec 'npm run build || true'"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.3",
+    "@types/react": "^16.0.23",
+    "@types/react-dom": "^16.0.3",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^8.0.0",
+    "browserify": "^14.5.0",
+    "nodemon": "^1.12.1",
+    "pug": "^2.0.0-rc.4",
+    "serve": "^6.4.1",
+    "surge": "^0.19.0",
+    "typescript": "^2.6.1"
+  },
+  "dependencies": {
+    "chrono-node": "^1.3.5",
+    "classnames": "^2.2.5",
+    "moment": "^2.19.2",
+    "parse-duration": "^0.1.1",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1"
+  }
+}

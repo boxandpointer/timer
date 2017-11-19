@@ -8,14 +8,7 @@ declare module 'chrono-node' {
     tags: { [tag: string]: boolean };
   };
 
-  export type Component =
-    | 'millisecond'
-    | 'second'
-    | 'minute'
-    | 'hour'
-    | 'day'
-    | 'month'
-    | 'year';
+  export type Component = 'millisecond' | 'second' | 'minute' | 'hour' | 'day' | 'month' | 'year';
 
   export type ParsedComponentValues = {
     knownValues: Partial<Record<Component, number>>;

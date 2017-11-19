@@ -4,17 +4,17 @@ import classNames from 'classnames';
 import parseDuration from 'parse-duration';
 import { parse as parseDate } from 'chrono-node';
 
-type TimerInputProps = {
-  onSubmit(interval: number): void;
+type InputProps = {
+  onSubmit(duration: number): void;
 };
 
-type TimerInputState = {
+type InputState = {
   input: string;
   invalid: boolean;
 };
 
-export class TimerInput extends React.Component<TimerInputProps, TimerInputState> {
-  constructor(props: TimerInputProps) {
+export class Input extends React.Component<InputProps, InputState> {
+  constructor(props: InputProps) {
     super(props);
 
     this.state = {
@@ -64,9 +64,10 @@ export class TimerInput extends React.Component<TimerInputProps, TimerInputState
     event.stopPropagation();
     event.preventDefault();
 
-    const endTime = parseDate(this.state.input)[0];
+    const date = parseDate(this.state.input);
+    const endTime = date[0];
     // Hack: `parseDate` interprets "2h 30m" as "2:30AM"
-    if (endTime !== null && this.state.input.indexOf('h') === -1) {
+    if (date.length > 0 && this.state.input.indexOf('h') === -1) {
       // Hack: `parseDate` interprets "tomorrow" as "tomorrow 12pm"
       if (!endTime.start.isCertain('hour')) {
         endTime.start.imply('hour', 0);
